@@ -544,6 +544,9 @@ endfunction
 " ------------------------------------------------------------------
 
 function! s:get_git_root()
+  if exists('b:git_dir')
+    return FugitiveWorkTree()
+  endif
   let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
   return v:shell_error ? '' : root
 endfunction
