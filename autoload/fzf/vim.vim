@@ -556,6 +556,15 @@ function! fzf#vim#gitfiles(args, ...)
   if empty(root)
     return s:warn('Not in git repo')
   endif
+
+  if a:args[0] == '+'
+    return s:fzf('gfiles', {
+    \ 'source': 'git diff --name-only --diff-filter=d @{u}... -- ' . a:args[1:],
+    \ 'dir':     root,
+    \ 'options': '-m --prompt "GitFiles+> "'
+    \}, a:000)
+  endif
+
   if a:args != '?'
     return s:fzf('gfiles', {
     \ 'source':  'git ls-files '.a:args.(s:is_win ? '' : ' | uniq'),
