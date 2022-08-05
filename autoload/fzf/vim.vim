@@ -617,8 +617,13 @@ function! fzf#vim#gitfiles(args, ...)
   let prefix = 'git -C ' . fzf#shellescape(root) . ' '
 
   if a:args[0] == '+'
+    let source_cmd = 'u=$(@G rev-parse --verify "@{u}" 2>/dev/null || ' .
+                \ '@G rev-parse --verify --quiet main || ' .
+                \ '@G rev-parse --verify --quiet master || echo HEAD) && ' .
+                \ '@G diff --name-only --merge-base --diff-filter=d $u -- '
+    let source_cmd = substitute(source_cmd, '@G', prefix, 'g') . a:args[1:]
     return s:fzf('gfiles', {
-    \ 'source': prefix . 'diff --name-only --diff-filter=d @{u}... -- ' . a:args[1:],
+    \ 'source': source_cmd,
     \ 'dir':     root,
     \ 'options': '-m --prompt "GitFiles+> "'
     \}, a:000)
