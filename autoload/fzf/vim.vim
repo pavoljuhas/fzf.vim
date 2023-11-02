@@ -711,11 +711,15 @@ function! fzf#vim#gitfiles(args, ...)
   let prefix = 'git -C ' . fzf#shellescape(root) . ' '
 
   if a:args[0] == '+'
-    let source_cmd = 'u=$(@G rev-parse --verify "@{u}" 2>/dev/null || ' .
-                \ '@G rev-parse --verify --quiet main || ' .
-                \ '@G rev-parse --verify --quiet master || echo HEAD) && ' .
+    let file_pattern = (a:args[1:] =~ '\S') ?
+                \ a:args[1:] : ':(attr:!linguist-generated)'
+    let source_cmd = 'u=$(' .
+                \ '@G rev-parse --verify --quiet origin/master || ' .
+                \ '@G rev-parse --verify --quiet origin/main || ' .
+                \ '@G rev-parse --verify "@{upstream}" 2>/dev/null || ' .
+                \ 'echo HEAD) && ' .
                 \ '@G diff --name-only --merge-base --diff-filter=d $u -- '
-    let source_cmd = substitute(source_cmd, '@G', prefix, 'g') . a:args[1:]
+    let source_cmd = substitute(source_cmd, '@G', prefix, 'g') . file_pattern
     return s:fzf('gfiles', {
     \ 'source': source_cmd,
     \ 'dir':     root,
