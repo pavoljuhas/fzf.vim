@@ -172,7 +172,7 @@ selected.
 
 * `Ag`
 * `Rg` / `RG`
-* `Lines / ``BLines`
+* `Lines` / `BLines`
 * `Tags` / `BTags`
 
 By setting `g:fzf_vim.listproc`, you can make them use location list instead.
@@ -217,16 +217,16 @@ endfunction
 Each command in fzf.vim is backed by a Vim function. You can override
 a command or define a variation of it by calling its corresponding function.
 
-| Command   | Vim function                                                           |
-| ---       | ---                                                                    |
-| `Files`   | `fzf#vim#files(dir, [spec dict], [fullscreen bool])`                   |
-| `GFiles`  | `fzf#vim#gitfiles(git_options, [spec dict], [fullscreen bool])`        |
-| `GFiles?` | `fzf#vim#gitfiles('?', [spec dict], [fullscreen bool])`                |
-| `Buffers` | `fzf#vim#buffers([spec dict], [fullscreen bool])`                      |
-| `Colors`  | `fzf#vim#colors([spec dict], [fullscreen bool])`                       |
-| `Rg`      | `fzf#vim#grep(command, [spec dict], [fullscreen bool])`                |
-| `RG`      | `fzf#vim#grep2(command_prefix, query, [spec dict], [fullscreen bool])` |
-| ...       | ...                                                                    |
+| Command   | Vim function                                                                     |
+| ---       | ---                                                                              |
+| `Files`   | `fzf#vim#files(dir, [spec dict], [fullscreen bool])`                             |
+| `GFiles`  | `fzf#vim#gitfiles(git_options, [spec dict], [fullscreen bool])`                  |
+| `GFiles?` | `fzf#vim#gitfiles('?', [spec dict], [fullscreen bool])`                          |
+| `Buffers` | `fzf#vim#buffers([query string], [bufnrs list], [spec dict], [fullscreen bool])` |
+| `Colors`  | `fzf#vim#colors([spec dict], [fullscreen bool])`                                 |
+| `Rg`      | `fzf#vim#grep(command, [spec dict], [fullscreen bool])`                          |
+| `RG`      | `fzf#vim#grep2(command_prefix, query, [spec dict], [fullscreen bool])`           |
+| ...       | ...                                                                              |
 
 (We can see that the last two optional arguments of each function are
 identical. They are directly passed to `fzf#wrap` function. If you haven't
