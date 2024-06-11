@@ -71,6 +71,12 @@ so you can omit it if you use a plugin manager that doesn't support hooks.
 - `Ag` requires [The Silver Searcher (ag)][ag]
 - `Rg` requires [ripgrep (rg)][rg]
 - `Tags` and `Helptags` require Perl
+- `Tags PREFIX` requires `readtags` command from [Universal Ctags](https://ctags.io/)
+
+```sh
+# Installing dependencies using Homebrew
+brew install fzf bat ripgrep the_silver_searcher perl universal-ctags
+```
 
 Commands
 --------
@@ -87,7 +93,7 @@ Commands
 | `:RG [PATTERN]`        | [rg][rg] search result; relaunch ripgrep on every keystroke                           |
 | `:Lines [QUERY]`       | Lines in loaded buffers                                                               |
 | `:BLines [QUERY]`      | Lines in the current buffer                                                           |
-| `:Tags [QUERY]`        | Tags in the project (`ctags -R`)                                                      |
+| `:Tags [PREFIX]`       | Tags in the project (`ctags -R`)                                                      |
 | `:BTags [QUERY]`       | Tags in the current buffer                                                            |
 | `:Changes`             | Changelist across all open buffers                                                    |
 | `:Marks`               | Marks                                                                                 |
@@ -170,8 +176,20 @@ let g:fzf_vim.preview_window = []
 #### Command-level options
 
 ```vim
-" [Buffers] Jump to the existing window if possible
+" [Buffers] Jump to the existing window if possible (default: 0)
 let g:fzf_vim.buffers_jump = 1
+
+" [Ag|Rg|RG] Display path on a separate line for narrow screens (default: 0)
+" * Requires Perl and fzf 0.53.0 or later
+let g:fzf_vim.grep_multi_line = 0
+   " PATH:LINE:COL:LINE
+let g:fzf_vim.grep_multi_line = 1
+   " PATH:LINE:COL:
+   " LINE
+let g:fzf_vim.grep_multi_line = 2
+   " PATH:LINE:COL:
+   " LINE
+   " (empty line)
 
 " [[B]Commits] Customize the options used by 'git log':
 let g:fzf_vim.commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
