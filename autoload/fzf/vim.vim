@@ -716,7 +716,7 @@ function! fzf#vim#gitfiles(args, ...)
 
   if a:args[0] == '+'
     let file_pattern = (a:args[1:] =~ '\S') ?
-                \ a:args[1:] : ':(attr:!linguist-generated)'
+                \ a:args[1:] : "':(attr:!linguist-generated)'"
     let source_cmd = 'u=$(' .
                 \ '@G rev-parse --verify --quiet origin/master || ' .
                 \ '@G rev-parse --verify --quiet origin/main || ' .
