@@ -1239,6 +1239,8 @@ function! s:btags_sink(lines)
   if s:is_paste(a:lines)
     return fzf#vim#paste(map(a:lines[1:], 's:strip(split(v:val, "\t")[0])'))
   endif
+  let tagname = ''
+  let from_position = [bufnr()] + getcurpos()[1:]
   call s:action_for(a:lines[0])
   let qfl = []
   for line in a:lines[1:]
